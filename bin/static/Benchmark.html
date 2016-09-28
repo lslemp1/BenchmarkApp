@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html ng-app="benchmark">
+<head>
+<meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Weather</title>
+     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<style type= "text/css">
+
+#title{
+color: black; 
+font-size: 72px; 
+text-align: center; 
+background-color: black; 
+font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serifs
+}
+
+
+
+</style>
+</head>
+
+<body id = "body" ng-controller="BenchmarkController as BC">
+
+<header id="title">Language Benchmark App</header><br>
+
+<div class = "containerSearch">
+
+<nav class="navbar navbar-default" id="nav">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#">Find Your Local Weather</a>
+    </div>
+    
+    <form class="form-inline" ng-submit="WC.returnWeather()">
+  	<div class="form-group">
+  	  	<div class="form-group">
+    	<label for="city">Enter City:</label>
+    	<input type="text" class="form-control" placeholder="City" id="city" ng-model="WC.city">
+  	</div>
+    	<label for="state">Enter State:</label>
+    	<input type="text" class="form-control" placeholder="State" id="state" ng-model="WC.state">
+  	</div>
+  	<button type="submit" class="btn btn-default" id="submit" ng-disabled ="! (WC.state && WC.city)">Get Weather</button>
+	</form>
+  </div>
+</nav>
+</div>
+<br>	
+ 
+ 
+<div id ="location" ng-hide="! (WC.state && WC.city)">{{WC.city}}, {{WC.state}}</div>
+<br>
+
+
+ <div class = "containerData">
+  <div class = "panel-group">
+    <div class="panel panel-info">
+    <div class = "panel-heading"><strong>Weather</strong></div>
+    <div class = "panel-body" id = "weather" ><div ng-show="WC.load">Loading...</div>{{ WC.weather.weather }}</div>
+    </div>
+    
+    <div class="panel panel-info">
+    <div class = "panel-heading"><strong>Temperature</strong></div>
+    <div class = "panel-body" id = "temp" ><div ng-show="WC.load">Loading...</div>{{ WC.weather.temperature_string }}</div>
+    </div>
+    
+    <div class="panel panel-info">
+    <div class = "panel-heading"><strong>Wind Gust</strong></div>
+    <div class = "panel-body" id = "wind" ><div ng-show="WC.load">Loading...</div>{{ WC.weather.wind_mph }} mph</div>
+    </div>
+    
+    <div class="panel panel-info">
+    <div class = "panel-heading"><strong>Relative Humidity</strong></div>
+    <div class = "panel-body" id = "humidity" ><div ng-show="WC.load">Loading...</div>{{ WC.weather.relative_humidity }}</div>
+    </div>
+</div>
+</div> 
+
+</body>
+</html>
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src = "js/angular-1.5.3.min.js"></script>
+    <script type="text/javascript">
+    
+    angular.module('benchmark', []).controller("BenchmarkController", function ($http)
+    		{
+    	
+    		var controller = this;
+    	
+            controller.benchmark = [];  		
+            controller.returnWeather = function(response)
+    		{ 
+            controller.load = true;
+    		$http.get('/benchmark/' + controller.state + "/" + controller.city).then(function(response) 
+    		{
+    			console.log(response.data);
+    			controller.weather = response.data.current_observation;
+    			controller.load = false;
+    			controller.mph = false;
+
+    			
+    		})
+              	}
+    		});        
+        
+    </script>
+        
