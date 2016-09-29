@@ -1,5 +1,7 @@
 package org.ssa.ironyard.services;
 
+import java.util.List;
+
 import org.ssa.ironyard.model.Framework;
 
 public interface FrameworkService 
@@ -10,6 +12,8 @@ public interface FrameworkService
     Framework insert(Framework framework);
 
     Framework update(Framework framework);
+    
+    List<Framework> readAll() throws Exception;
 
     boolean delete(int id);
 

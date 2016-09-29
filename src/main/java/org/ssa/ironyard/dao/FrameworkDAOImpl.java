@@ -5,6 +5,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -117,6 +121,32 @@ public class FrameworkDAOImpl extends AbstractDAO<Framework> implements Framewor
 
     return null;
     }
+    
+    
+    public List<Framework> readAll() throws Exception {
+        PreparedStatement prepareStatement = null;
+        Connection connection = null;
+        ResultSet results = null;
+        List<Framework> list = new ArrayList<>();
+        try {
+            connection = this.datasource.getConnection();
+            prepareStatement = connection.prepareStatement(this.orm.prepareRead());
+            results = prepareStatement.executeQuery();
+
+            while (results.next())
+                list.add(orm.map(results));
+
+            System.err.println(list);
+            return list;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            cleanup(results, prepareStatement, connection);
+        }
+
+        return Collections.emptyList();
+        }
     
     
     public int clear() {

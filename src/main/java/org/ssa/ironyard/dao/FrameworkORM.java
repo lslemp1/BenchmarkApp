@@ -22,11 +22,15 @@ public interface FrameworkORM extends ORM<Framework>
     default Framework map(ResultSet results) {
 
     Framework temp = new Framework();
+    Languages l = new Languages();
+    Server s = new Server();
     try {
+        s.setName(results.getString("server"));
+        l.setName(results.getString("languages"));
         temp.setId(results.getInt("id"));
         temp.setName(results.getString("name"));
-        new Languages(results.getInt("id"), results.getString("name"));
-        new Server(results.getInt("id"), results.getString("name"));
+        temp.setLanguages(l);
+        temp.setServer(s);
         temp.setThread8(results.getInt("thread8"));
         temp.setThread16(results.getInt("thread16"));
         temp.setThread32(results.getInt("thread32"));
@@ -54,7 +58,7 @@ public interface FrameworkORM extends ORM<Framework>
 
     @Override
     default String prepareRead() {
-    return "SELECT " + projection() + " FROM " + table() + " WHERE id=?";
+    return "SELECT " + projection() + " FROM " + table();
     }
 
     @Override

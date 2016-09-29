@@ -1,5 +1,7 @@
 package org.ssa.ironyard.services;
 
+import java.util.List;
+
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +27,13 @@ public class FrameworkServiceImpl implements FrameworkService
     public Framework read(int id) 
     {
         return fw.read(id);
+    }
+    
+    @Override
+    @Transactional
+    public List<Framework> readAll() throws Exception 
+    {
+        return fw.readAll();
     }
 
     @Override

@@ -117,7 +117,70 @@ public class Framework implements DomainObject
 
     public void setThread256(int thread256) {
         this.thread256 = thread256;
-    }    
+    }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + errors;
+        result = prime * result + id;
+        result = prime * result + ((languages == null) ? 0 : languages.hashCode());
+        result = prime * result + ((name == null) ? 0 : name.hashCode());
+        result = prime * result + ((server == null) ? 0 : server.hashCode());
+        result = prime * result + thread128;
+        result = prime * result + thread16;
+        result = prime * result + thread256;
+        result = prime * result + thread32;
+        result = prime * result + thread64;
+        result = prime * result + thread8;
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        Framework other = (Framework) obj;
+        if (errors != other.errors)
+            return false;
+        if (id != other.id)
+            return false;
+        if (languages == null) {
+            if (other.languages != null)
+                return false;
+        } else if (!languages.equals(other.languages))
+            return false;
+        if (name == null) {
+            if (other.name != null)
+                return false;
+        } else if (!name.equals(other.name))
+            return false;
+        if (server == null) {
+            if (other.server != null)
+                return false;
+        } else if (!server.equals(other.server))
+            return false;
+        if (thread128 != other.thread128)
+            return false;
+        if (thread16 != other.thread16)
+            return false;
+        if (thread256 != other.thread256)
+            return false;
+        if (thread32 != other.thread32)
+            return false;
+        if (thread64 != other.thread64)
+            return false;
+        if (thread8 != other.thread8)
+            return false;
+        return true;
+    }  
+    
+    
     
 
 }
